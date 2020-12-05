@@ -1,0 +1,13 @@
+[package]
+name = "funcy"
+description = "Simple function based template engine"
+version = "0.1.0"
+authors = ["camc"]
+edition = "2018"
+readme = "README.md"
+license = "Apache-2.0"
+keywords = ["template", "templating", "language", "html", "function"]
+categories = ["template-engine", "text-processing"]
+documentation = "https://docs.rs/funcy/"
+repository = "https://github.com/camc/funcy"
+homepage = "https://github.com/camc/funcy"
