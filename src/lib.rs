@@ -8,7 +8,7 @@
 //! ```
 //! struct Echo();
 //! impl funcy::PlaceholderFunction for Echo {
-//!     fn placeholder_fn_handler<'a>(&mut self, arg: &'a str) -> Result<String, String> {
+//!     fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, arg: &'a str) -> Result<String, String> {
 //!         Ok(arg.to_string())
 //!     }
 //! }
@@ -22,7 +22,7 @@
 //! ```
 //! struct Counter(usize);
 //! impl funcy::PlaceholderFunction for Counter {
-//!     fn placeholder_fn_handler<'a>(&mut self, _arg: &'a str) -> Result<String, String> {
+//!     fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, _arg: &'a str) -> Result<String, String> {
 //!         self.0 += 1;
 //!         Ok(self.0.to_string())
 //!     }

@@ -1,6 +1,6 @@
 struct Echo();
 impl crate::PlaceholderFunction for Echo {
-    fn placeholder_fn_handler<'a>(&mut self, arg: &'a str) -> Result<String, String> {
+    fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, arg: &'a str) -> Result<String, String> {
         Ok(arg.to_string())
     }
 }
@@ -17,7 +17,7 @@ fn echo_function() {
 
 struct Counter(usize);
 impl crate::PlaceholderFunction for Counter {
-    fn placeholder_fn_handler<'a>(&mut self, _arg: &'a str) -> Result<String, String> {
+    fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, _arg: &'a str) -> Result<String, String> {
         self.0 += 1;
         Ok(self.0.to_string())
     }
@@ -41,7 +41,7 @@ fn nonexistent_function() {
 
 struct RetErr();
 impl crate::PlaceholderFunction for RetErr {
-    fn placeholder_fn_handler<'a>(&mut self, _arg: &'a str) -> Result<String, String> {
+    fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, _arg: &'a str) -> Result<String, String> {
         Err("test error".to_string())
     }
 }

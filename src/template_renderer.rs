@@ -24,7 +24,7 @@ use std::collections::HashMap;
 /// ```
 /// struct Echo();
 /// impl funcy::PlaceholderFunction for Echo {
-///     fn placeholder_fn_handler<'a>(&mut self, arg: &'a str) -> Result<String, String> {
+///     fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, arg: &'a str) -> Result<String, String> {
 ///         Ok(arg.to_string())
 ///     }
 /// }
@@ -99,7 +99,7 @@ impl<'a> TemplateRenderer<'a> {
             }
 
             if let Some(placeholderfn) = self.placeholder_functions.get_mut(func) {
-                match placeholderfn.placeholder_fn_handler(arg) {
+                match placeholderfn.placeholder_fn_handler(func, arg) {
                     Ok(output) => out_str.push_str(&output),
                     Err(err) => return Err(RenderError::FunctionError(func, err)),
                 }
@@ -150,7 +150,7 @@ impl std::error::Error for RenderError<'_> {}
 /// ```
 /// struct Echo();
 /// impl funcy::PlaceholderFunction for Echo {
-///     fn placeholder_fn_handler<'a>(&mut self, arg: &'a str) -> Result<String, String> {
+///     fn placeholder_fn_handler<'a>(&mut self, _name: &'a str, arg: &'a str) -> Result<String, String> {
 ///         Ok(arg.to_string())
 ///     }
 /// }
@@ -158,7 +158,10 @@ impl std::error::Error for RenderError<'_> {}
 pub trait PlaceholderFunction {
     /// Called when a placeholder references the function.
     /// The arg may be empty. Errors returned will be propagated and returned from the [`TemplateRenderer::render`] function.
-    fn placeholder_fn_handler<'a>(&mut self, arg: &'a str) -> Result<String, String>;
+    /// 
+    /// The name argument includes the name of the placeholder function being called. 
+    /// This can be used to have one struct handle multiple placeholder functions.
+    fn placeholder_fn_handler<'a>(&mut self, name: &'a str, arg: &'a str) -> Result<String, String>;
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Default)]
