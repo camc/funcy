@@ -218,3 +218,14 @@ fn split_once<'a>(inp: &'a str, delim: char) -> Option<(&'a str, &'a str)> {
         None
     }
 }
+
+#[test]
+fn placeholder_parsing() {
+    assert_eq!(parse_placeholders("<!$ name arg>"), [PlaceholderExpr { start_idx: 0, end_idx: 13, content: "name arg" }]);
+    assert_eq!(parse_placeholders("<!$ name1 arg1> <!$ name2 arg2>")
+        , [PlaceholderExpr { start_idx: 0, end_idx: 15, content: "name1 arg1" }
+        , PlaceholderExpr { start_idx: 16, end_idx: 31, content: "name2 arg2" }]);
+    assert_eq!(parse_placeholders("some text <!$ name1 arg1> other text <!$ name2 arg2> even more text")
+        , [PlaceholderExpr { start_idx: 10, end_idx: 25, content: "name1 arg1" }
+        , PlaceholderExpr { start_idx: 37, end_idx: 52, content: "name2 arg2" }]);
+}
